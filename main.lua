@@ -58,7 +58,7 @@ SMODS.Atlas {
 
 SMODS.Consumable {
     set = "Spectral",
-    key = "honk",
+    key = "conjuration",
 	config = {
         -- How many cards can be selected.
         max_highlighted = 1,
@@ -72,14 +72,14 @@ SMODS.Consumable {
         return {vars = {(card.ability or self.config).max_highlighted}}
     end,
     loc_txt = {
-        name = 'Honk',
+        name = 'Conjuration',
         text = {
             "Select {C:attention}#1#{} card to",
             "apply {C:attention}Indigo Seal{}"
         }
     },
     cost = 4,
-    atlas = "honk_atlas",
+    atlas = "conjuration_atlas",
     pos = {x=0, y=0},
     use = function(self, card, area, copier)
         for i = 1, math.min(#G.hand.highlighted, card.ability.max_highlighted) do
@@ -99,8 +99,8 @@ SMODS.Consumable {
 }
 
 SMODS.Atlas {
-    key = "honk_atlas",
-    path = "honk.png",
+    key = "conjuration_atlas",
+    path = "conjuration.png",
     px = 71,
     py = 95
 }
