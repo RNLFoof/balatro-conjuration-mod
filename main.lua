@@ -1,8 +1,8 @@
 --- STEAMODDED HEADER
---- MOD_NAME: Conjuration Spectral Card
---- MOD_ID: conjuration-spectral-card
---- MOD_AUTHOR: [Dust]
---- PREFIX: conj
+--- MOD_NAME: Modded Seal
+--- MOD_ID: seel-mod
+--- MOD_AUTHOR: [stupxd]
+--- PREFIX: seel
 --- MOD_DESCRIPTION: Modded seal example
 --- DEPENDENCIES: [Steamodded>=1.0.0~ALPHA-1314c]
 
@@ -11,20 +11,23 @@
 
 SMODS.Seal {
     name = "modded-Seal",
-    key = "seal_indigo",
+    key = "indigo",
     badge_colour = HEX("1d4fd7"),
-	config = {},
+	config = { mult = 5, chips = 20, money = 1, x_mult = 1.5  },
     loc_txt = {
         -- Badge name (displayed on card description when seal is applied)
         label = 'Indigo Seal',
         -- Tooltip description
         name = 'Indigo Seal',
         text = {
-            'Fucks you <3'
+            '{C:mult}+#1#{} Mult',
+            '{C:chips}+#2#{} Chips',
+            '{C:money}$#3#{}',
+            '{X:mult,C:white}X#4#{} Mult',
         }
     },
     loc_vars = function(self, info_queue)
-        return { vars = {} }
+        return { vars = {self.config.mult, self.config.chips, self.config.money, self.config.x_mult, } }
     end,
     atlas = "seal_atlas",
     pos = {x=0, y=0},
@@ -35,6 +38,10 @@ SMODS.Seal {
         -- main_scoring context is used whenever the card is scored
         if context.main_scoring and context.cardarea == G.play then
             return {
+                mult = self.config.mult,
+                chips = self.config.chips,
+                dollars = self.config.money,
+                x_mult = self.config.x_mult
             }
         end
     end,
@@ -51,12 +58,12 @@ SMODS.Atlas {
 
 SMODS.Consumable {
     set = "Spectral",
-    key = "conjuration",
+    key = "honk",
 	config = {
         -- How many cards can be selected.
         max_highlighted = 1,
         -- the key of the seal to change to
-        extra = 'seal_indigo',
+        extra = 'seel_indigo',
     },
     loc_vars = function(self, info_queue, card)
         -- Handle creating a tooltip with seal args.
@@ -65,14 +72,14 @@ SMODS.Consumable {
         return {vars = {(card.ability or self.config).max_highlighted}}
     end,
     loc_txt = {
-        name = 'Conjuration',
+        name = 'Honk',
         text = {
             "Select {C:attention}#1#{} card to",
             "apply {C:attention}Indigo Seal{}"
         }
     },
     cost = 4,
-    atlas = "conjuration_atlas",
+    atlas = "honk_atlas",
     pos = {x=0, y=0},
     use = function(self, card, area, copier)
         for i = 1, math.min(#G.hand.highlighted, card.ability.max_highlighted) do
@@ -92,8 +99,8 @@ SMODS.Consumable {
 }
 
 SMODS.Atlas {
-    key = "conjuration_atlas",
-    path = "conjuration.png",
+    key = "honk_atlas",
+    path = "honk.png",
     px = 71,
     py = 95
 }
