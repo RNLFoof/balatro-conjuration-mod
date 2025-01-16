@@ -1,17 +1,7 @@
---- MOD_NAME: Conjuration Mod
---- MOD_ID: conjuration-mod
---- MOD_AUTHOR: [Dust]
---- PREFIX: conj
---- MOD_DESCRIPTION: Modded seal example
---- DEPENDENCIES: [Steamodded>=1.0.0~ALPHA-1314c]
-
-----------------------------------------------
-------------MOD CODE -------------------------
-
 SMODS.Seal {
     name = "modded-Seal",
     key = "indigo",
-    badge_colour = HEX("1d4fd7"),
+    badge_colour = HEX("5729e0"),
 	config = { mult = 5, chips = 20, money = 1, x_mult = 1.5  },
     loc_txt = {
         -- Badge name (displayed on card description when seal is applied)
