@@ -7,8 +7,7 @@
 	"prefix": "conj",
 	"main_file": "main.lua",
 	"priority": 0,
-	"badge_colour": "FF230A",
-	"badge_text_colour": "ABC123",
+	"badge_colour": "5729e0",
 	"version": "0.0.1",
 	"dependencies": ["Steamodded (>=1.0.0~ALPHA-1314c)"]
 }
