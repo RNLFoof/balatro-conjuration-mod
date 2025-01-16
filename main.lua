@@ -60,8 +60,9 @@ SMODS.Consumable {
     loc_txt = {
         name = 'Conjuration',
         text = {
-            "Select {C:attention}#1#{} card to",
-            "apply {C:attention}Indigo Seal{}"
+            "Add an {C:attention}Indigo Seal{}",
+            "to {C:attention}#1#{} selected",
+            "card in your hand",
         }
     },
     cost = 4,
