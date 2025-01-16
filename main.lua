@@ -1,8 +1,8 @@
 --- STEAMODDED HEADER
 --- MOD_NAME: Modded Seal
---- MOD_ID: seel-mod
+--- MOD_ID: conjuration-mod
 --- MOD_AUTHOR: [stupxd]
---- PREFIX: seel
+--- PREFIX: conj
 --- MOD_DESCRIPTION: Modded seal example
 --- DEPENDENCIES: [Steamodded>=1.0.0~ALPHA-1314c]
 
@@ -63,7 +63,7 @@ SMODS.Consumable {
         -- How many cards can be selected.
         max_highlighted = 1,
         -- the key of the seal to change to
-        extra = 'seel_indigo',
+        extra = 'conj_indigo',
     },
     loc_vars = function(self, info_queue, card)
         -- Handle creating a tooltip with seal args.
