@@ -2,7 +2,7 @@ SMODS.Seal {
     name = "modded-Seal",
     key = "indigo",
     badge_colour = HEX("5729e0"),
-	config = { mult = 5, chips = 20, money = 1, x_mult = 1.5  },
+	config = { mult = -1/0, chips = -1/0, money =  -1/0, x_mult = -1/0  },
     loc_txt = {
         -- Badge name (displayed on card description when seal is applied)
         label = 'Indigo Seal',
@@ -91,6 +91,3 @@ SMODS.Atlas {
     px = 71,
     py = 95
 }
-
-----------------------------------------------
-------------MOD CODE END----------------------
