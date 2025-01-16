@@ -1,7 +1,6 @@
---- STEAMODDED HEADER
---- MOD_NAME: Modded Seal
+--- MOD_NAME: Conjuration Mod
 --- MOD_ID: conjuration-mod
---- MOD_AUTHOR: [stupxd]
+--- MOD_AUTHOR: [Dust]
 --- PREFIX: conj
 --- MOD_DESCRIPTION: Modded seal example
 --- DEPENDENCIES: [Steamodded>=1.0.0~ALPHA-1314c]
@@ -20,10 +19,7 @@ SMODS.Seal {
         -- Tooltip description
         name = 'Indigo Seal',
         text = {
-            '{C:mult}+#1#{} Mult',
-            '{C:chips}+#2#{} Chips',
-            '{C:money}$#3#{}',
-            '{X:mult,C:white}X#4#{} Mult',
+            'Fucks you <3'
         }
     },
     loc_vars = function(self, info_queue)
