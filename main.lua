@@ -2,14 +2,16 @@ SMODS.Seal {
     name = "modded-Seal",
     key = "indigo",
     badge_colour = HEX("5729e0"),
-	config = { mult = -1/0, chips = -1/0, money =  -1/0, x_mult = -1/0  },
+	config = { mult = -1, chips = -1, money =  -1, x_mult = -1  },
     loc_txt = {
         -- Badge name (displayed on card description when seal is applied)
         label = 'Indigo Seal',
         -- Tooltip description
         name = 'Indigo Seal',
         text = {
-            'Fucks you <3'
+            "Travels upwards between played sealess cards when they're directly sequential in both position and rank.",
+            "Upon reaching an Ace, is removed and creates a negative FuUCK Joker.",
+            "Ex: A♥[J♥→Q♥]2♥K♥, 7♥8♣[4♠→5♣→6♦]"
         }
     },
     loc_vars = function(self, info_queue)
@@ -21,14 +23,50 @@ SMODS.Seal {
     -- self - this seal prototype
     -- card - card this seal is applied to
     calculate = function(self, card, context)
+        function cardStr(card)
+            return string.format("[%d%s]", card.base.id, card.base.suit)
+        end
+
+        print(cardStr(card), "1")
         -- main_scoring context is used whenever the card is scored
         if context.main_scoring and context.cardarea == G.play then
-            return {
-                mult = self.config.mult,
-                chips = self.config.chips,
-                dollars = self.config.money,
-                x_mult = self.config.x_mult
-            }
+            -- get the index of the card within the scoring cards
+            print(cardStr(card), "2")
+            cardIndex = nil
+            for i, checkingCard in pairs(context.scoring_hand) do
+                if checkingCard == card then
+                    cardIndex = i
+                    break
+                end
+            end
+            
+            -- if this is the last card, bail, otherwise take note
+            print(cardStr(card), "3")
+            if cardIndex ~= #context.scoring_hand then
+                nextCard = context.scoring_hand[cardIndex+1]
+                
+                -- if the next card is sequential and sealess, pass the seal on
+                print(cardStr(card), "4")
+                print(cardStr(card), 4)
+                print(cardStr(card), card.rank)
+                print(cardStr(card), nextCard.rank)
+                print(cardStr(card), nextCard.base.id)
+                print(cardStr(card), nextCard.sealess)
+                if card.base.id + 1 == nextCard.base.id and nextCard.seal == nil then
+                    G.E_MANAGER:add_event(
+                        Event({
+                            trigger = 'after',
+                            delay = 0.1,
+                            func = function()
+                                print(cardStr(card), "5")
+                                nextCard:set_seal('conj_indigo', nil, false)
+                                card:set_seal(nil, true, true)
+                                return true
+                            end
+                        }))
+                end
+
+            end
         end
     end,
 }
