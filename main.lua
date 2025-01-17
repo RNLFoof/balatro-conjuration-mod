@@ -8,10 +8,16 @@ SMODS.Seal {
         label = 'Indigo Seal',
         -- Tooltip description
         name = 'Indigo Seal',
+        -- This could really use more concise phrasing...
         text = {
-            "Travels upwards between played sealess cards when they're directly sequential in both position and rank.",
-            "Upon reaching an Ace, is removed and creates a negative FuUCK Joker.",
-            "Ex: A♥[J♥→Q♥]2♥K♥, 7♥8♣[4♠→5♣→6♦]"
+            "Travels upwards between",
+            "scored cards when",
+            "they're directly sequential",
+            "in both position and rank.",
+            "Upon reaching an Ace,",
+            "is removed and creates a",
+            "{C:dark_edition}negative{} {C:attention}Stars{}.",
+            "{C:inactive}Ex: A[JQ]2K, 78[456]"
         }
     },
     loc_vars = function(self, info_queue)
