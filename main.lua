@@ -1,3 +1,5 @@
+indigoColor = HEX("5729e0")
+
 sealCalculateFunction = function(self, card, context)
     function cardStr(card)
         if card == nil then
@@ -18,7 +20,7 @@ sealCalculateFunction = function(self, card, context)
         -- So, all the cards are evaluated before the animations play.
         -- This means that in order to have the seal visibly transfer between multiple cards,
         -- Each card needs to find out if it *will* be transfered to them.
-        cardWithSeal = card
+        local cardWithSeal = card
         passesBetween = {}
         for i, checkingCard in pairs(context.scoring_hand) do
             if checkingCard == cardWithSeal then
@@ -37,11 +39,49 @@ sealCalculateFunction = function(self, card, context)
                         print(cardStr(cardWithSeal), "confirmed, passing to", cardStr(nextCard))
                         local cardWithSealInEvent = context.scoring_hand[cardIndex]
                         local nextCardInEvent = context.scoring_hand[nextCardIndex]
-                        spacing = 0.001
+                        spacing = 0.5
+
+                        local dissolve_time = 0.7
+                        local explode_time = 0.7
+                        major = self
+                        self.major = self
+                        theGuy = Moveable{T={
+                                    x = cardWithSeal.T.x,
+                                    y = cardWithSeal.T.y,
+                                    w = 4,
+                                    h = 4,
+                                }
+                            }
+                        theGuy.states.hover.is = true
+                        cardWithSeal.children["theGuy"] = theGuy
+                        particles = Particles(0, 0, 0, 0, {
+                                timer_type = 'REAL',
+                                timer = 0.01,
+                                scale = 0.2,
+                                initialize = true,
+                                lifespan = 0.3,
+                                speed = 1,
+                                --padding = -1,
+                                attach = theGuy,
+                                colours = {indigoColor},
+                                fill = false,
+                                hover=true
+                            })
+                        particles:fade(1)
+                            
+                        print(cardWithSeal)
+                        x=0
+                        y=0
+                        X=0
+                        Y=0
+                        
+                        --cardWithSeal.children.hi = Sprite(cardWithSeal.T.x+30, cardWithSeal.T.y ,1,1, seal_atlas)
 
                         G.E_MANAGER:add_event(Event({delay=spacing,trigger="after",func = function()
                             print(cardStr(cardWithSealInEvent), "playing animation of passing to", cardStr(nextCardInEvent))
                             cardWithSealInEvent:flip()
+                            --particles:remove()
+                            -- particles:fade(12   )
                             return true
                         end;}))
                                     
@@ -78,7 +118,7 @@ end
 indigoSeal = SMODS.Seal {
     name = "modded-Seal",
     key = "indigo",
-    badge_colour = HEX("5729e0"),
+    badge_colour = indigoColor,
 	config = { mult = -1, chips = -1, money =  -1, x_mult = -1  },
     loc_txt = {
         -- Badge name (displayed on card description when seal is applied)
@@ -106,7 +146,7 @@ indigoSeal = SMODS.Seal {
     calculate = sealCalculateFunction
 }
 
-SMODS.Atlas {
+seal_atlas = SMODS.Atlas {
     key = "seal_atlas",
     path = "modded_seal.png",
     px = 71,
