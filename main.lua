@@ -37,71 +37,101 @@ sealCalculateFunction = function(self, card, context)
                     print(cardStr(cardWithSeal), "real rank", nextCard.base.id)
                     if cardWithSeal.base.id + 1 == nextCard.base.id and nextCard.seal == nil then
                         print(cardStr(cardWithSeal), "confirmed, passing to", cardStr(nextCard))
+
+                        -- These work? IDK why I satarted thinking they didn't?
                         local cardWithSealInEvent = context.scoring_hand[cardIndex]
                         local nextCardInEvent = context.scoring_hand[nextCardIndex]
-                        spacing = 0.5
+                        spacing = 0.1
 
                         local dissolve_time = 0.7
                         local explode_time = 0.7
                         major = self
                         self.major = self
-                        theGuy = Moveable{T={
-                                    x = cardWithSeal.T.x,
-                                    y = cardWithSeal.T.y,
-                                    w = 4,
-                                    h = 4,
-                                }
-                            }
-                        theGuy.states.hover.is = true
-                        cardWithSeal.children["theGuy"] = theGuy
-                        particles = Particles(0, 0, 0, 0, {
-                                timer_type = 'REAL',
-                                timer = 0.01,
-                                scale = 0.2,
-                                initialize = true,
-                                lifespan = 0.3,
-                                speed = 1,
-                                --padding = -1,
-                                attach = theGuy,
-                                colours = {indigoColor},
-                                fill = false,
-                                hover=true
-                            })
-                        particles:fade(1)
-                            
-                        print(cardWithSeal)
-                        x=0
-                        y=0
-                        X=0
-                        Y=0
+                        -- cardWithSealInEvent.seal = nil
+                        -- nextCardInEvent.seal = 'conj_indigo'
+                        -- G.CONTROLLER.locks.seal = true
+                        -- cardWithSealInEvent:set_seal(nil, false, false)
+                        -- nextCardInEvent:set_seal('conj_indigo', false, false)
                         
-                        --cardWithSeal.children.hi = Sprite(cardWithSeal.T.x+30, cardWithSeal.T.y ,1,1, seal_atlas)
-
+                            
                         G.E_MANAGER:add_event(Event({delay=spacing,trigger="after",func = function()
-                            print(cardStr(cardWithSealInEvent), "playing animation of passing to", cardStr(nextCardInEvent))
-                            cardWithSealInEvent:flip()
-                            --particles:remove()
-                            -- particles:fade(12   )
+                            play_sound('tarot2', 0.76, 0.4)
+                            cardWithSealInEvent:juice_up(0.3, 0.2)
+                            cardWithSealInEvent:set_seal(nil, true, true)
+                            theGuy = Sprite(
+                                cardWithSealInEvent.T.x,
+                                cardWithSealInEvent.T.y,
+                                cardWithSealInEvent.T.w,
+                                cardWithSealInEvent.T.h,
+                                seal_atlas,
+                                {x=0, y=0}
+                            )
+                            -- theGuy.T.x = cardWithSeal.T.x
+                            theGuy.T.x = nextCardInEvent.T.x
+                            --theGuy:calculate_parrallax()
+                            theGuy.states.hover.can = true
+                            theGuy.states.hover.is = true
+                            nextCardInEvent.children["theGuy"] = theGuy
+                            -- particles = Particles(0, 0, 0, 0, {
+                            --         timer_type = 'REAL',
+                            --         timer = 0.01,
+                            --         scale = 0.2,
+                            --         initialize = true,
+                            --         lifespan = 0.3,
+                            --         speed = 1,
+                            --         --padding = -1,
+                            --         attach = theGuy,
+                            --         colours = {indigoColor},
+                            --         fill = false,
+                            --         hover=true
+                            --     })
+                            -- particles.states.hover.can = true
+                            -- particles.states.hover.is = true
+                            -- particles:fade(1)
                             return true
                         end;}))
+
+                        G.E_MANAGER:add_event(Event({delay=spacing,trigger="after",func = function()
+                            nextCardInEvent:set_seal('conj_indigo', true, true)
+                            nextCardInEvent.children["theGuy"] = nil
+                            return true
+                        end;}))
+
+                        
+
+                        -- print(cardWithSeal)
+                        -- x=0
+                        -- y=0
+                        -- X=0
+                        -- Y=0
+                        
+                        -- --cardWithSeal.children.hi = Sprite(cardWithSeal.T.x+30, cardWithSeal.T.y ,1,1, seal_atlas)
+
+                        -- G.E_MANAGER:add_event(Event({delay=spacing,trigger="after",func = function()
+                        --     print(cardStr(cardWithSealInEvent), "playing animation of passing to", cardStr(nextCardInEvent))
+                        --     cardWithSealInEvent:flip()
+                        --     --particles:remove()
+                        --     -- particles:fade(12   )
+                        --     return true
+                        -- end;}))
                                     
-                        G.E_MANAGER:add_event(Event({delay=spacing,trigger="after",func = function()
-                                    nextCardInEvent:flip()
-                                    return true
-                        end;}))
-                        G.E_MANAGER:add_event(Event({delay=spacing,trigger="after",func = function()
-                                    cardWithSealInEvent:set_seal(nil, true, true)
-                                    nextCardInEvent:set_seal('conj_indigo', true, true)
-                                    return true
-                        end;}))
-                        G.E_MANAGER:add_event(Event({delay=spacing,trigger="after",func = function()
-                                    cardWithSealInEvent:flip()
-                                    return true
-                        end;}))
-                        G.E_MANAGER:add_event(Event({delay=spacing,trigger="after",func = function()
-                                    nextCardInEvent:flip()
-                                    return true
-                        end;}))
+                        -- G.E_MANAGER:add_event(Event({delay=spacing,trigger="after",func = function()
+                        --             nextCardInEvent:flip()
+                        --             return true
+                        -- end;}))
+                        -- G.E_MANAGER:add_event(Event({delay=spacing,trigger="after",func = function()
+                        --             cardWithSealInEvent:set_seal(nil, true, true)
+                        --             nextCardInEvent:set_seal('conj_indigo', true, true)
+                        --             return true
+                        -- end;}))
+                        -- G.E_MANAGER:add_event(Event({delay=spacing,trigger="after",func = function()
+                        --             cardWithSealInEvent:flip()
+                        --             return true
+                        -- end;}))
+                        -- G.E_MANAGER:add_event(Event({delay=spacing,trigger="after",func = function()
+                        --             nextCardInEvent:flip()
+                        --             return true
+                        -- end;}))
                         sealCalculateFunction(self, nextCardInEvent, context)
                             
                         break
@@ -114,6 +144,8 @@ sealCalculateFunction = function(self, card, context)
         print(cardStr(card), "3")
     end
 end
+
+
 
 indigoSeal = SMODS.Seal {
     name = "modded-Seal",
@@ -198,7 +230,7 @@ SMODS.Consumable {
     end
 }
 
-SMODS.Atlas {
+conjuration_atlas = SMODS.Atlas {
     key = "conjuration_atlas",
     path = "conjuration.png",
     px = 71,
